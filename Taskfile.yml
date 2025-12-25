@@ -1,0 +1,48 @@
+version: '3'
+
+tasks:
+  sync:
+    desc: 环境对齐 (Sync environment)
+    cmds:
+      - bash -c "source ~/.bashrc && sync"
+
+  check:
+    desc: 审计基础设施端口 (Check infra ports)
+    cmds:
+      - 'ss -tln | grep 19092 || (echo "WARNING: Redpanda (19092) is NOT running" && exit 1)'
+      - 'echo "Redpanda (19092) is active"'
+
+  init-py:
+    desc: 初始化 Python 3.12 虚拟环境 (Init Python 3.12 venv with uv)
+    dir: src/brain
+    cmds:
+      - uv venv --python 3.12
+      - uv pip install icecream rich torch river python-dotenv confluent-kafka
+
+  build-rust:
+    desc: Rust 后端审计 (Rust check)
+    cmds:
+      - cargo check
+
+  run-ingestion:
+    desc: 启动数据采集 (Run Ingestion)
+    cmds:
+      - cargo build
+      - sudo setcap cap_net_raw,cap_net_admin=eip target/debug/vesper-backend
+      - ./target/debug/vesper-backend
+
+  run-brain:
+    desc: 启动 AI 分析引擎 (Run AI Engine)
+    dir: src/brain
+    cmds:
+      - |
+        if [ -f .env.template ] && [ ! -f .env ]; then
+          cp .env.template .env
+        fi
+      - ./.venv/bin/python3 main.py
+
+  run-portal:
+    desc: 启动 Tauri 可视化前端 (Run UI Portal)
+    dir: src/portal
+    cmds:
+      - npm run tauri dev

@@ -1,0 +1,15 @@
+target/
+.venv/
+.env
+__pycache__/
+*.log
+.DS_Store
+node_modules/
+dist/
+dist-js/
+src-tauri/target/
+
+
+# Added by cargo
+
+/target

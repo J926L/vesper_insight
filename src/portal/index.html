@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/src/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vesper Insight Portal</title>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <span id="logo-icon">V</span>
+      VESPER
+    </div>
+    <div class="nav-item active" id="nav-dashboard">Dashboard</div>
+    <div class="nav-item" id="nav-alerts">Alerts</div>
+    <div class="nav-item" id="nav-models">Models</div>
+    <div class="nav-item" id="nav-settings">Settings</div>
+  </div>
+
+  <main class="main-content">
+    <header class="header">
+      <h1 id="view-title">Overview</h1>
+      <div id="status-dot" class="status-offline"
+        style="width: 12px; height: 12px; border-radius: 50%; background-color: #4b5563;"></div>
+    </header>
+
+    <!-- Dashboard View -->
+    <div id="view-dashboard" class="view">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Flows</span>
+          <span class="stat-value" id="stat-total">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">High Risk Alerts</span>
+          <span class="stat-value" id="stat-alerts" style="color: var(--danger);">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Max Anomaly Score</span>
+          <span class="stat-value" id="stat-max-score" style="color: var(--warning);">0.00</span>
+        </div>
+      </div>
+
+      <div class="alerts-panel">
+        <h2>Recent Anomalies</h2>
+        <div class="table-container">
+          <table id="alerts-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Flow</th>
+                <th>Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholder Views -->
+    <div id="view-alerts" class="view" style="display: none;">
+      <div class="stat-card">
+        <p>Historical Alerts analysis coming soon...</p>
+      </div>
+    </div>
+    <div id="view-models" class="view" style="display: none;">
+      <div class="stat-card">
+        <p>Model Performance metrics coming soon...</p>
+      </div>
+    </div>
+    <div id="view-settings" class="view" style="display: none;">
+      <div class="stat-card">
+        <p>System Configuration coming soon...</p>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
